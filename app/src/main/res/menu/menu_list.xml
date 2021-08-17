@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/future"
+            android:checked="false"
+            android:title="@string/menu_future" />
+
+        <item
+            android:id="@+id/opened"
+            android:checked="false"
+            android:title="@string/menu_opened" />
+
+        <item
+            android:id="@+id/all"
+            android:checked="true"
+            android:title="@string/menu_all" />
+
+    </group>
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+</menu>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IconColor">
+        <attr name="iconColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="LineColor">
+        <attr name="lineColor" format="color" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.preference.SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_key_notify"
+        android:summary="@string/pref_notify_summary"
+        android:title="@string/pref_notify_name" />
+
+    <ListPreference
+        app:defaultValue="@string/pref_night_auto"
+        app:entries="@array/night_mode"
+        app:entryValues="@array/night_mode_value"
+        app:key="@string/pref_key_night"
+        app:title="@string/pref_night_dialog"
+        app:useSimpleSummaryProvider="true" />
+
+</androidx.preference.PreferenceScreen>
