@@ -10,15 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.developers.lettervault.R
 import com.google.developers.lettervault.data.Letter
+import com.google.developers.lettervault.notification.NotificationWorker
 import com.google.developers.lettervault.util.Event
 import com.google.developers.lettervault.util.LETTER_ID
 import com.google.developers.lettervault.util.NOTIFICATION_CHANNEL_ID
 import kotlinx.android.synthetic.main.activity_letter_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Display a unlocked letter or a lock if letter is still in vault.
@@ -28,11 +32,6 @@ class LetterDetailActivity : AppCompatActivity() {
     private lateinit var viewModel: LetterDetailViewModel
     private lateinit var simpleDate: SimpleDateFormat
     private var shareIntent: Intent? = null
-
-    companion object {
-        var dataInput : Data? = null
-        var expireTime : Long? = null
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,15 +78,6 @@ class LetterDetailActivity : AppCompatActivity() {
             lock.visibility = View.GONE
         }
 
-        expireTime = letter.expires
-        val channelName = getString(R.string.notify_channel_name)
-        dataInput.apply {
-            Data.Builder()
-                .putLong(LETTER_ID, letter.id)
-                .putString(NOTIFICATION_CHANNEL_ID, channelName)
-                .build()
-        }
-
         viewModel.open(letter)
 
         supportActionBar?.title = getString(R.string.title_opened, simpleDate.format(letter.opened))
@@ -95,6 +85,19 @@ class LetterDetailActivity : AppCompatActivity() {
 
         subject.text = letter.subject
         content.text = letter.content
+
+        val workManager = WorkManager.getInstance(this)
+        val expireTime = letter.expires
+        val channelName = getString(R.string.notify_channel_name)
+        val dataInput = Data.Builder()
+            .putLong(LETTER_ID, letter.id)
+            .putString(NOTIFICATION_CHANNEL_ID, channelName)
+            .build()
+        val switchReminder = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+            .setInitialDelay(expireTime, TimeUnit.MINUTES)
+            .setInputData(dataInput)
+            .build()
+        workManager.enqueue(switchReminder)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

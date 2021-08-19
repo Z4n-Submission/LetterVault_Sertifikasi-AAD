@@ -20,7 +20,7 @@ interface LetterDao {
     @Query("select * from letter where id = :letterId")
     fun getLetter(letterId: Long): LiveData<Letter>
 
-    @Query("select * from letter order by expires")
+    @Query("select * from letter order by created")
     fun getRecentLetter() : LiveData<Letter>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
