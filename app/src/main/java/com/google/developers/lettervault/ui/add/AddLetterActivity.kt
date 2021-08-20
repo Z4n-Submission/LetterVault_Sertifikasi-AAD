@@ -58,7 +58,7 @@ class AddLetterActivity : AppCompatActivity(), TimePickerDialog.DialogTimeListen
                 if (addMessage.isEmpty()){
                     Toast.makeText(applicationContext, "Please fill the message", Toast.LENGTH_SHORT).show()
                 } else {
-                    addViewModel.save(addSubject, addMessage)
+                    addViewModel.save(addSubject, addMessage, applicationContext)
                     addViewModel.saved
                     Toast.makeText(applicationContext, "Message is saved", Toast.LENGTH_SHORT).show()
                 }

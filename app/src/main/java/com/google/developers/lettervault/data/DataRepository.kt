@@ -5,8 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import com.google.developers.lettervault.R
+import com.google.developers.lettervault.notification.NotificationWorker
+import com.google.developers.lettervault.util.LETTER_ID
 import com.google.developers.lettervault.util.LetterLock
+import com.google.developers.lettervault.util.NOTIFICATION_CHANNEL_ID
 import com.google.developers.lettervault.util.executeThread
+import java.util.concurrent.TimeUnit
 
 /**
  * Handles data sources and execute on the correct threads.
@@ -57,8 +65,20 @@ class DataRepository(private val letterDao: LetterDao) {
      * Add a letter to database and schedule a notification on
      * when the letter vault can be opened.
      */
-    fun save(letter: Letter) = executeThread {
+    fun save(letter: Letter, ctx: Context) = executeThread {
         letterDao.insert(letter)
+        val workManager = WorkManager.getInstance(ctx)
+        val expireTime = letter.expires
+        val channelName = ctx.getString(R.string.notify_channel_name)
+        val dataInput = Data.Builder()
+            .putLong(LETTER_ID, letter.id)
+            .putString(NOTIFICATION_CHANNEL_ID, channelName)
+            .build()
+        val switchReminder = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+            .setInitialDelay(expireTime, TimeUnit.MINUTES)
+            .setInputData(dataInput)
+            .build()
+        workManager.enqueue(switchReminder)
     }
 
     /**
