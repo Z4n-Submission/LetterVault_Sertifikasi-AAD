@@ -86,18 +86,6 @@ class LetterDetailActivity : AppCompatActivity() {
         subject.text = letter.subject
         content.text = letter.content
 
-        val workManager = WorkManager.getInstance(this)
-        val expireTime = letter.expires
-        val channelName = getString(R.string.notify_channel_name)
-        val dataInput = Data.Builder()
-            .putLong(LETTER_ID, letter.id)
-            .putString(NOTIFICATION_CHANNEL_ID, channelName)
-            .build()
-        val switchReminder = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-            .setInitialDelay(expireTime, TimeUnit.MINUTES)
-            .setInputData(dataInput)
-            .build()
-        workManager.enqueue(switchReminder)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
