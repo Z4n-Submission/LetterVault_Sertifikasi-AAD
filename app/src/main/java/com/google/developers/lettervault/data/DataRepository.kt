@@ -41,6 +41,10 @@ class DataRepository(private val letterDao: LetterDao) {
      */
     fun getLetters(filter: LetterState): LiveData<PagedList<Letter>> {
         //Panggil dao dengan menggunakan pagedlist
+        val letterSort = getFilteredQuery(filter)
+        val config = PagedList.Config.Builder()
+            .build()
+        return LivePagedListBuilder(letterDao.getLetters(letterSort), config).build()
     }
 
     fun getLetter(id: Long): LiveData<Letter> {
