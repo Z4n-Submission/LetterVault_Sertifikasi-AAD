@@ -67,16 +67,16 @@ class DataRepository(private val letterDao: LetterDao) {
      * when the letter vault can be opened.
      */
     fun save(letter: Letter, ctx: Context) = executeThread {
-        letterDao.insert(letter)
         notify(letter, ctx)
     }
 
     private fun notify(letter: Letter, ctx: Context) {
+        val id = letterDao.insert(letter)
         val workManager = WorkManager.getInstance(ctx)
         val expireTime = letter.expires - System.currentTimeMillis()
         val channelName = ctx.getString(R.string.notify_channel_name)
         val dataInput = Data.Builder()
-            .putLong(LETTER_ID, letter.id)
+            .putLong(LETTER_ID, id)
             .putString(NOTIFICATION_CHANNEL_ID, channelName)
             .build()
         val oneTimeWorkRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
@@ -84,7 +84,6 @@ class DataRepository(private val letterDao: LetterDao) {
             .setInputData(dataInput)
             .build()
         workManager.enqueue(oneTimeWorkRequest)
-        Log.d(workManager.toString(), "workmanager")
     }
 
     /**
