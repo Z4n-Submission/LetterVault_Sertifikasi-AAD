@@ -1,7 +1,6 @@
 package com.google.developers.lettervault.data
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -67,10 +66,6 @@ class DataRepository(private val letterDao: LetterDao) {
      * when the letter vault can be opened.
      */
     fun save(letter: Letter, ctx: Context) = executeThread {
-        notify(letter, ctx)
-    }
-
-    private fun notify(letter: Letter, ctx: Context) {
         val id = letterDao.insert(letter)
         val workManager = WorkManager.getInstance(ctx)
         val expireTime = letter.expires - System.currentTimeMillis()
@@ -80,7 +75,7 @@ class DataRepository(private val letterDao: LetterDao) {
             .putString(NOTIFICATION_CHANNEL_ID, channelName)
             .build()
         val oneTimeWorkRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-            .setInitialDelay(expireTime, TimeUnit.MINUTES)
+            .setInitialDelay(expireTime, TimeUnit.MILLISECONDS)
             .setInputData(dataInput)
             .build()
         workManager.enqueue(oneTimeWorkRequest)
