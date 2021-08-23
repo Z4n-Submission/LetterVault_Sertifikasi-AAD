@@ -35,9 +35,7 @@ class ListActivity : AppCompatActivity() {
         val factory = DataViewModelFactory(this)
         viewModel = ViewModelProviders.of(this, factory).get(LetterViewModel::class.java)
         viewModel.letters.observe(this, {
-            letterAdapter.submitList(it)
-            letterAdapter.notifyDataSetChanged()
-            recycler.adapter = letterAdapter
+            //bind data adapter ke recycle view menggunakan pagelist
         })
 
         val pixelSize = resources.getDimensionPixelSize(R.dimen.item_decoration_margin)
@@ -56,10 +54,7 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setFabClick() {
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            val addIntent = Intent(this, AddLetterActivity::class.java)
-            startActivity(addIntent)
-        }
+        //buat fungsi fab yang mengarah ke add activity
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

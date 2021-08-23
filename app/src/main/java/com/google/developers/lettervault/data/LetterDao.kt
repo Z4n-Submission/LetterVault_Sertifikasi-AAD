@@ -20,7 +20,9 @@ interface LetterDao {
     @Query("select * from letter where id = :letterId")
     fun getLetter(letterId: Long): LiveData<Letter>
 
-    @Query("select * from letter where opened = 0 order by created asc")
+    //getRecent sudah tepat tapi masih bisa diperbaiki lagi
+    //kek gni dh beneer sih
+    @Query("select * from letter order by created asc")
     fun getRecentLetter() : LiveData<Letter>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

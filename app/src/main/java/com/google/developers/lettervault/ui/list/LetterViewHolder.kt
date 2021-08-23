@@ -36,15 +36,11 @@ class LetterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } else {
             if (letter.expires < System.currentTimeMillis()) {
                 val ready = context.getString(R.string.letter_ready)
-                letterState.text = ready
-                lock.visibility = View.GONE
-                messageText.visibility = View.GONE
+                //panggil value ready
             } else {
                 val opening =
                     context.getString(R.string.letter_opening, simpleDate.format(letter.expires))
-                letterState.text = opening
-                lock.visibility = View.GONE
-                messageText.visibility = View.GONE
+                //panggil view opening
             }
         }
 

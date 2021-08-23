@@ -9,13 +9,6 @@ import com.google.developers.lettervault.data.Letter
  * ViewMode for the HomeActivity only holds recent letter.
  */
 class HomeViewModel(private val dataRepository: DataRepository) : ViewModel() {
-    private lateinit var recentLetter : LiveData<Letter>
-
-    fun setRecentLetter(){
-        recentLetter = dataRepository.getRecentLetter()
-    }
-
-    fun getRecentLetter() : LiveData<Letter> {
-        return recentLetter
-    }
+    //panggil data repo untuk menampilkan recent
+    //buat fun untuk menampilkan data pada home
 }

@@ -53,27 +53,6 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
     }
 
     private fun showNotify() {
-        val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val builder = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_mail)
-            .setContentTitle("Open a Letter")
-            .setContentText("Vault is ready to open secret letter")
-            .setColor(ContextCompat.getColor(applicationContext, android.R.color.transparent))
-            .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
-            .setContentIntent(getContentIntent())
-            .setSound(alarmSound)
-            .setAutoCancel(true)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-            channel.enableVibration(true)
-            channel.vibrationPattern = longArrayOf(1000, 1000, 1000, 1000, 1000)
-            builder.setChannelId(NOTIFICATION_CHANNEL_ID)
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        val notification = builder.build()
-        notificationManager.notify(NOTIFICATION_ID, notification)
+        //Panggil fungsi untuk menampilkan notifikasi
     }
 }

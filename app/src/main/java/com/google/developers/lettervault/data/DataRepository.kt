@@ -40,13 +40,7 @@ class DataRepository(private val letterDao: LetterDao) {
      * Get letters with a filtered state for paging.
      */
     fun getLetters(filter: LetterState): LiveData<PagedList<Letter>> {
-        val letterSort = getFilteredQuery(filter)
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(10)
-            .setPageSize(20)
-            .build()
-        return LivePagedListBuilder(letterDao.getLetters(letterSort), config).build()
+        //Panggil dao dengan menggunakan pagedlist
     }
 
     fun getLetter(id: Long): LiveData<Letter> {
@@ -66,19 +60,7 @@ class DataRepository(private val letterDao: LetterDao) {
      * when the letter vault can be opened.
      */
     fun save(letter: Letter, ctx: Context) = executeThread {
-        val id = letterDao.insert(letter)
-        val workManager = WorkManager.getInstance(ctx)
-        val expireTime = letter.expires - System.currentTimeMillis()
-        val channelName = ctx.getString(R.string.notify_channel_name)
-        val dataInput = Data.Builder()
-            .putLong(LETTER_ID, id)
-            .putString(NOTIFICATION_CHANNEL_ID, channelName)
-            .build()
-        val oneTimeWorkRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-            .setInitialDelay(expireTime, TimeUnit.MILLISECONDS)
-            .setInputData(dataInput)
-            .build()
-        workManager.enqueue(oneTimeWorkRequest)
+        //Panggil fungsi dao dan buat fungsi notifikasi disini
     }
 
     /**

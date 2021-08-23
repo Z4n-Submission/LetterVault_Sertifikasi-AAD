@@ -43,7 +43,7 @@ class LetterDetailActivity : AppCompatActivity() {
         }
 
         viewModel.letter.observe(this, Observer(this::init))
-        viewModel.canOpen.observe(this, Observer(this::runEvent))
+        //panggil privat fungsi runEvent dan gunakan fungsi tryOpening untuk memunculkan snakbar
     }
 
     private fun runEvent(eventLetter: Event<Letter>) {
@@ -63,7 +63,6 @@ class LetterDetailActivity : AppCompatActivity() {
     private fun init(letter: Letter?) {
         if (letter == null) return
         if (letter.expires > System.currentTimeMillis()) {
-            viewModel.tryOpening(letter)
             lock.visibility = View.VISIBLE
             supportActionBar?.title =
                 getString(R.string.title_opening, simpleDate.format(letter.expires))
