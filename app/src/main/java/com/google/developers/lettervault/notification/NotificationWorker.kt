@@ -8,6 +8,7 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.preference.PreferenceManager
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
@@ -46,6 +47,8 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
             applicationContext.getString(R.string.pref_key_notify),
             false
         )
+
+        Log.d("testing", shouldNotify.toString())
 
         if (shouldNotify){
             showNotify()

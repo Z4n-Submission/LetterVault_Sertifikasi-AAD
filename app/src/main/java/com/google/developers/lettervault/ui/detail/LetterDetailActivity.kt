@@ -9,20 +9,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.developers.lettervault.R
 import com.google.developers.lettervault.data.Letter
-import com.google.developers.lettervault.notification.NotificationWorker
 import com.google.developers.lettervault.util.Event
 import com.google.developers.lettervault.util.LETTER_ID
-import com.google.developers.lettervault.util.NOTIFICATION_CHANNEL_ID
 import kotlinx.android.synthetic.main.activity_letter_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Display a unlocked letter or a lock if letter is still in vault.

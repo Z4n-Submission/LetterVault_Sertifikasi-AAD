@@ -61,6 +61,8 @@ class AddLetterActivity : AppCompatActivity(), TimePickerDialog.DialogTimeListen
                     addViewModel.save(addSubject, addMessage, applicationContext)
                     addViewModel.saved
                     Toast.makeText(this, "Message is saved", Toast.LENGTH_SHORT).show()
+                    val finishIntent = Intent(applicationContext, HomeActivity::class.java)
+                    startActivity(finishIntent)
                 }
                 true
             }

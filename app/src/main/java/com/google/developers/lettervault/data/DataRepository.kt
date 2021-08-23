@@ -1,6 +1,7 @@
 package com.google.developers.lettervault.data
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -72,17 +73,18 @@ class DataRepository(private val letterDao: LetterDao) {
 
     private fun notify(letter: Letter, ctx: Context) {
         val workManager = WorkManager.getInstance(ctx)
-        val expireTime = letter.expires
+        val expireTime = letter.expires - System.currentTimeMillis()
         val channelName = ctx.getString(R.string.notify_channel_name)
         val dataInput = Data.Builder()
             .putLong(LETTER_ID, letter.id)
             .putString(NOTIFICATION_CHANNEL_ID, channelName)
             .build()
-        val switchReminder = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+        val oneTimeWorkRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
             .setInitialDelay(expireTime, TimeUnit.MINUTES)
             .setInputData(dataInput)
             .build()
-        workManager.enqueue(switchReminder)
+        workManager.enqueue(oneTimeWorkRequest)
+        Log.d(workManager.toString(), "workmanager")
     }
 
     /**
