@@ -67,12 +67,12 @@ class DataRepository(private val letterDao: LetterDao) {
      * when the letter vault can be opened.
      */
     fun save(letter: Letter, ctx: Context) = executeThread {
-        letterDao.insert(letter)
+        val id = letterDao.insert(letter)
         val workManager = WorkManager.getInstance(ctx)
         val expireTime = letter.expires
         val channelName = ctx.getString(R.string.notify_channel_name)
         val dataInput = Data.Builder()
-            .putLong(LETTER_ID, letter.id)
+            .putLong(LETTER_ID, id)
             .putString(NOTIFICATION_CHANNEL_ID, channelName)
             .build()
         val switchReminder = OneTimeWorkRequest.Builder(NotificationWorker::class.java)

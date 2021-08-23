@@ -48,7 +48,7 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
             false
         )
         Log.d("tania", "ini noitf worker")
-        showNotify()
+        if (shouldNotify) showNotify()
 
         return Result.success()
     }
@@ -65,7 +65,6 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
             .setContentIntent(getContentIntent())
             .setSound(alarmSound)
             .setAutoCancel(true)
-            .setOngoing(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_NAME, NotificationManager.IMPORTANCE_DEFAULT)
