@@ -5,16 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.sqlite.db.SimpleSQLiteQuery
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import com.google.developers.lettervault.R
-import com.google.developers.lettervault.notification.NotificationWorker
-import com.google.developers.lettervault.util.LETTER_ID
 import com.google.developers.lettervault.util.LetterLock
-import com.google.developers.lettervault.util.NOTIFICATION_CHANNEL_ID
 import com.google.developers.lettervault.util.executeThread
-import java.util.concurrent.TimeUnit
 
 /**
  * Handles data sources and execute on the correct threads.

@@ -1,16 +1,13 @@
 package com.google.developers.lettervault.ui.add
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.google.developers.lettervault.R
-import com.google.developers.lettervault.ui.home.HomeActivity
 import com.google.developers.lettervault.util.DataViewModelFactory
 import com.google.developers.lettervault.util.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_letter_detail.*

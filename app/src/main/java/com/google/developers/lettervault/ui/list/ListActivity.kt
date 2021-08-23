@@ -8,10 +8,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.developers.lettervault.R
 import com.google.developers.lettervault.data.Letter
-import com.google.developers.lettervault.ui.add.AddLetterActivity
 import com.google.developers.lettervault.ui.detail.LetterDetailActivity
 import com.google.developers.lettervault.ui.setting.SettingActivity
 import com.google.developers.lettervault.util.DataViewModelFactory

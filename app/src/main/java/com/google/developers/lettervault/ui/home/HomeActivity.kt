@@ -29,10 +29,6 @@ class HomeActivity : AppCompatActivity() {
 
         val factory = DataViewModelFactory(this)
         homeViewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
-        homeViewModel.setRecentLetter()
-        homeViewModel.getRecentLetter().observe(this, {
-            showRecent(it)
-        })
 
     }
 
